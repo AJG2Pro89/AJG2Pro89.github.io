@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alberto García · Data Engineer</title>
+<meta name="description" content="Portafolio de Alberto García, Data Engineer. Pipelines serverless, lakehouse y modelado de datos.">
+<meta property="og:title" content="Alberto García · Data Engineer">
+<meta property="og:description" content="Serverless data pipelines, lakehouse and data modeling.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230f766e'/><text x='16' y='22' font-family='Arial' font-size='15' font-weight='700' fill='white' text-anchor='middle'>AG</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8faf9; --surface: #ffffff; --surface-2: #eef3f1;
+    --text: #13201c; --muted: #55635e; --border: #dbe3e0;
+    --accent: #0f766e; --accent-soft: #d5efeb; --warn: #b45309; --warn-soft: #fbead3;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1412; --surface: #141d1a; --surface-2: #1b2622;
+      --text: #e6eeeb; --muted: #9aaba5; --border: #2a3833;
+      --accent: #2dd4bf; --accent-soft: #123a35; --warn: #f59e0b; --warn-soft: #3a2a10;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1412; --surface: #141d1a; --surface-2: #1b2622;
+    --text: #e6eeeb; --muted: #9aaba5; --border: #2a3833;
+    --accent: #2dd4bf; --accent-soft: #123a35; --warn: #f59e0b; --warn-soft: #3a2a10;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  html[data-lang="es"] [data-l="en"], html[data-lang="en"] [data-l="es"] { display: none !important; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: var(--mono); font-size: .88em; background: var(--surface-2); padding: .1em .35em; border-radius: 4px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header.nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  header.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 12px; }
+  .brand { font-weight: 700; color: var(--text); letter-spacing: -.01em; }
+  .nav-links { display: flex; gap: 20px; font-size: 14px; }
+  .nav-links a { color: var(--muted); }
+  .toggles { display: flex; gap: 6px; }
+  .toggles button { font: 500 13px Inter, sans-serif; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+  .toggles button:hover { border-color: var(--accent); }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: 0; }
+  h1 { font-size: clamp(34px, 6vw, 52px); line-height: 1.1; letter-spacing: -.03em; margin: 0 0 16px; }
+  h2 { font-size: 28px; letter-spacing: -.02em; margin: 0 0 8px; }
+  h3 { font-size: 18px; margin: 0 0 8px; }
+  .eyebrow { font: 500 13px var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 680px; margin: 0 0 28px; }
+  .sub { color: var(--muted); margin: 0 0 32px; max-width: 720px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1px solid var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--bg); }
+  .btn.ghost { color: var(--accent); }
+  .btn:hover { text-decoration: none; filter: brightness(1.05); }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 32px 0; }
+  @media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .stat b { display: block; font-size: 26px; letter-spacing: -.02em; }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin: 24px 0 8px; overflow-x: auto; }
+  .diagram svg { display: block; width: 100%; min-width: 640px; height: auto; }
+  .diagram .box { fill: var(--surface-2); stroke: var(--border); }
+  .diagram .box.hl { fill: var(--accent-soft); stroke: var(--accent); }
+  .diagram text { fill: var(--text); font: 600 13px Inter, sans-serif; }
+  .diagram text.s { fill: var(--muted); font: 400 11px var(--mono); }
+  .diagram .arrow { stroke: var(--muted); stroke-width: 1.5; fill: none; marker-end: url(#ah); }
+  .diagram #ah path { fill: var(--muted); }
+  .caption { font-size: 13px; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+  tr:last-child td { border-bottom: 0; }
+
+  .bars { display: grid; gap: 14px; }
+  .bar-row { display: grid; grid-template-columns: 170px 1fr; gap: 12px; align-items: center; font-size: 14px; }
+  .bar-track { background: var(--surface-2); border-radius: 6px; height: 30px; position: relative; }
+  .bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 10px; font: 600 13px var(--mono); white-space: nowrap; }
+  .bar.new { background: var(--accent); color: var(--bg); }
+  .bar.old { background: var(--warn-soft); color: var(--warn); border: 1px solid var(--warn); }
+  @media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+  .lesson { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 20px; }
+  .lesson h3 { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--warn); }
+  .lesson p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 14px; padding: 5px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); }
+  .stack-group { margin-bottom: 22px; }
+  .stack-group h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+  .h-block { margin-top: 44px; }
+
+  footer { padding: 32px 0; color: var(--muted); font-size: 13px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Alberto García</a>
+    <nav class="nav-links">
+      <a href="#project"><span data-l="es">Proyecto</span><span data-l="en">Project</span></a>
+      <a href="#stack">Stack</a>
+      <a href="#contact"><span data-l="es">Contacto</span><span data-l="en">Contact</span></a>
+    </nav>
+    <div class="toggles">
+      <button id="langBtn" type="button" aria-label="Cambiar idioma / Switch language">EN</button>
+      <button id="themeBtn" type="button" aria-label="Cambiar tema / Toggle theme">◐</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Data Engineer · Costa Rica</div>
+      <h1>
+        <span data-l="es">Pipelines de datos confiables, simples y baratos de operar.</span>
+        <span data-l="en">Data pipelines that are reliable, simple and cheap to run.</span>
+      </h1>
+      <p class="lead">
+        <span data-l="es">Soy Alberto García, ingeniero de datos. Trabajo en ingesta, modelado y lakehouse sobre Microsoft (SQL Server, Synapse, SSIS), Databricks y AWS. Me gusta reemplazar infraestructura cara por arquitecturas serverless bien documentadas.</span>
+        <span data-l="en">I'm Alberto García, a data engineer. I work on ingestion, modeling and lakehouse projects across Microsoft (SQL Server, Synapse, SSIS), Databricks and AWS. I like replacing expensive infrastructure with well-documented serverless architectures.</span>
+      </p>
+      <div class="btns">
+        <a class="btn primary" href="#project"><span data-l="es">Ver proyecto destacado</span><span data-l="en">See featured project</span></a>
+        <a class="btn ghost" href="https://github.com/AJG2Pro89" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT -->
+  <section id="project">
+    <div class="wrap">
+      <div class="eyebrow"><span data-l="es">Proyecto destacado</span><span data-l="en">Featured project</span></div>
+      <h2>Canvas Data 2 → AWS Data Lake</h2>
+      <p class="sub">
+        <span data-l="es">Pipeline serverless que sincroniza diariamente Canvas Data 2 (API DAP de Instructure, la plataforma LMS Canvas) hacia un data lake en S3 con Parquet, catalogado en Glue y consultable con SQL en Athena.</span>
+        <span data-l="en">A serverless pipeline that syncs Canvas Data 2 (Instructure's DAP API for the Canvas LMS) daily into an S3 data lake in Parquet, catalogued in Glue and queryable with SQL in Athena.</span>
+      </p>
+      <div class="btns">
+        <a class="btn ghost" href="https://github.com/AJG2Pro89/canvas-data-2-datalake" target="_blank" rel="noopener"><span data-l="es">Código en GitHub →</span><span data-l="en">Code on GitHub →</span></a>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>~$12–15</b><span data-l="es">USD / mes en total</span><span data-l="en">USD / month total</span></div>
+        <div class="stat"><b>−80%</b><span data-l="es">vs. arquitectura con Aurora</span><span data-l="en">vs. Aurora-based design</span></div>
+        <div class="stat"><b>~96</b><span data-l="es">tablas configurables por CSV</span><span data-l="en">tables configurable via CSV</span></div>
+        <div class="stat"><b>10</b><span data-l="es">tablas sincronizadas en paralelo</span><span data-l="en">tables synced in parallel</span></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3><span data-l="es">El problema</span><span data-l="en">The problem</span></h3>
+          <p>
+            <span data-l="es">La arquitectura de referencia (Harvard, canvas-data-2-aws) carga los datos en Aurora PostgreSQL dentro de una VPC. Funciona, pero cuesta ~$77/mes solo en base de datos y red, y agregar una tabla requiere cambiar código.</span>
+            <span data-l="en">The reference architecture (Harvard's canvas-data-2-aws) loads data into Aurora PostgreSQL inside a VPC. It works, but costs ~$77/month in database and networking alone, and adding a table means changing code.</span>
+          </p>
+        </div>
+        <div class="card">
+          <h3><span data-l="es">La solución</span><span data-l="en">The solution</span></h3>
+          <p>
+            <span data-l="es">Reescritura 100% serverless: sin base de datos, sin VPC ni NAT. Lambdas orquestadas por Step Functions escriben Parquet en S3; Glue cataloga y Athena consulta. Todo desplegado como código con AWS SAM.</span>
+            <span data-l="en">A fully serverless rewrite: no database, no VPC or NAT. Lambdas orchestrated by Step Functions write Parquet to S3; Glue catalogues it and Athena queries it. Everything is deployed as code with AWS SAM.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Architecture -->
+      <div class="h-block">
+        <h3><span data-l="es">Arquitectura</span><span data-l="en">Architecture</span></h3>
+        <div class="diagram" role="img" aria-label="EventBridge schedule triggers a Step Function that runs list_tables, then sync_to_s3 in a Map of 10, then run_crawlers; data lands in S3 Parquet, is catalogued by Glue and queried by Athena.">
+          <svg viewBox="0 0 900 270" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z"/></marker></defs>
+            <!-- Orchestration band -->
+            <rect x="160" y="10" width="580" height="130" rx="10" fill="none" stroke="var(--border)" stroke-dasharray="4 4"/>
+            <text x="175" y="30" class="s">Step Functions · state machine</text>
+
+            <rect class="box" x="10" y="55" width="125" height="60" rx="8"/>
+            <text x="72" y="81" text-anchor="middle">EventBridge</text>
+            <text x="72" y="99" text-anchor="middle" class="s">cron 06:00 UTC</text>
+
+            <rect class="box" x="180" y="55" width="150" height="60" rx="8"/>
+            <text x="255" y="81" text-anchor="middle">list_tables</text>
+            <text x="255" y="99" text-anchor="middle" class="s">Lambda · CSV config</text>
+
+            <rect class="box hl" x="365" y="45" width="170" height="80" rx="8"/>
+            <text x="450" y="73" text-anchor="middle">sync_to_s3</text>
+            <text x="450" y="91" text-anchor="middle" class="s">Map × 10 concurrent</text>
+            <text x="450" y="107" text-anchor="middle" class="s">10 GB RAM · 15 min</text>
+
+            <rect class="box" x="570" y="55" width="150" height="60" rx="8"/>
+            <text x="645" y="81" text-anchor="middle">run_crawlers</text>
+            <text x="645" y="99" text-anchor="middle" class="s">Lambda</text>
+
+            <rect class="box" x="770" y="55" width="120" height="60" rx="8"/>
+            <text x="830" y="81" text-anchor="middle">SNS</text>
+            <text x="830" y="99" text-anchor="middle" class="s">email report</text>
+
+            <path class="arrow" d="M135,85 H176"/>
+            <path class="arrow" d="M330,85 H361"/>
+            <path class="arrow" d="M535,85 H566"/>
+            <path class="arrow" d="M720,85 H766"/>
+
+            <!-- Storage band -->
+            <rect class="box" x="180" y="190" width="150" height="60" rx="8"/>
+            <text x="255" y="216" text-anchor="middle">DAP API</text>
+            <text x="255" y="234" text-anchor="middle" class="s">Instructure</text>
+
+            <rect class="box hl" x="365" y="190" width="170" height="60" rx="8"/>
+            <text x="450" y="216" text-anchor="middle">S3 · Parquet</text>
+            <text x="450" y="234" text-anchor="middle" class="s">canvas/ · canvas_logs/</text>
+
+            <rect class="box" x="570" y="190" width="150" height="60" rx="8"/>
+            <text x="645" y="216" text-anchor="middle">Glue Catalog</text>
+            <text x="645" y="234" text-anchor="middle" class="s">2 crawlers</text>
+
+            <rect class="box" x="770" y="190" width="120" height="60" rx="8"/>
+            <text x="830" y="216" text-anchor="middle">Athena</text>
+            <text x="830" y="234" text-anchor="middle" class="s">SQL ad-hoc</text>
+
+            <path class="arrow" d="M330,220 H361"/>
+            <path class="arrow" d="M450,125 V186"/>
+            <path class="arrow" d="M645,115 V186"/>
+            <path class="arrow" d="M535,220 H566"/>
+            <path class="arrow" d="M720,220 H766"/>
+          </svg>
+        </div>
+        <p class="caption">
+          <span data-l="es">Credenciales DAP y marcas de último sync en SSM Parameter Store. Configuración de tablas en un CSV dentro del mismo bucket.</span>
+          <span data-l="en">DAP credentials and last-sync watermarks live in SSM Parameter Store. Table configuration is a CSV in the same bucket.</span>
+        </p>
+      </div>
+
+      <!-- Sync modes -->
+      <div class="h-block">
+        <h3><span data-l="es">Tres modos de sincronización</span><span data-l="en">Three sync modes</span></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th><span data-l="es">Modo</span><span data-l="en">Mode</span></th><th><span data-l="es">Cuándo</span><span data-l="en">When</span></th><th><span data-l="es">Comportamiento</span><span data-l="en">Behavior</span></th></tr></thead>
+            <tbody>
+              <tr><td><code>incremental</code></td>
+                <td><span data-l="es">Tablas con <code>meta.action</code> (la mayoría)</span><span data-l="en">Tables with <code>meta.action</code> (most)</span></td>
+                <td><span data-l="es">Snapshot inicial de bootstrap, luego solo deltas: upsert y delete sobre el Parquet existente.</span><span data-l="en">One bootstrap snapshot, then deltas only: upserts and deletes applied to the existing Parquet.</span></td></tr>
+              <tr><td><code>snapshot</code></td>
+                <td><span data-l="es">Tablas pequeñas sin historial</span><span data-l="en">Small tables without history</span></td>
+                <td><span data-l="es">Descarga completa diaria que sobrescribe el archivo.</span><span data-l="en">Full daily download that overwrites the file.</span></td></tr>
+              <tr><td><code>append</code></td>
+                <td><code>web_logs</code></td>
+                <td><span data-l="es">Particiones <code>year=/month=/day=</code>, idempotente vía deduplicación por <code>key.id</code>.</span><span data-l="en"><code>year=/month=/day=</code> partitions, idempotent through dedup on <code>key.id</code>.</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Cost -->
+      <div class="h-block">
+        <h3><span data-l="es">Costo mensual estimado</span><span data-l="en">Estimated monthly cost</span></h3>
+        <p class="caption" style="margin-top:0">
+          <span data-l="es">Institución con 1–5K usuarios activos (~1M eventos/día en web_logs).</span>
+          <span data-l="en">Institution with 1–5K active users (~1M events/day in web_logs).</span>
+        </p>
+        <div class="bars">
+          <div class="bar-row">
+            <span data-l="es">Serverless (este proyecto)</span><span data-l="en">Serverless (this project)</span>
+            <div class="bar-track"><div class="bar new" style="width:19%">~$15</div></div>
+          </div>
+          <div class="bar-row">
+            <span data-l="es">Aurora PostgreSQL + VPC</span><span data-l="en">Aurora PostgreSQL + VPC</span>
+            <div class="bar-track"><div class="bar old" style="width:100%">~$77</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Engineering decisions -->
+      <div class="h-block">
+        <h3><span data-l="es">Decisiones de ingeniería</span><span data-l="en">Engineering decisions</span></h3>
+        <div class="grid2">
+          <div class="card">
+            <h3>TypeEnforcer</h3>
+            <p><span data-l="es">La inferencia automática de tipos generaba esquemas distintos entre particiones. Un módulo compartido fuerza cada columna al tipo canónico definido en <code>schemas_tables_columns.csv</code> (~1,400 columnas).</span><span data-l="en">Automatic type inference produced different schemas across partitions. A shared module casts each column to the canonical type defined in <code>schemas_tables_columns.csv</code> (~1,400 columns).</span></p>
+          </div>
+          <div class="card">
+            <h3><span data-l="es">Configuración, no código</span><span data-l="en">Config, not code</span></h3>
+            <p><span data-l="es">Agregar o quitar tablas es editar <code>allow_load</code> en un CSV y subirlo a S3. La siguiente ejecución lo toma sin redeploy.</span><span data-l="en">Adding or removing tables means editing <code>allow_load</code> in a CSV and uploading it to S3. The next run picks it up without a redeploy.</span></p>
+          </div>
+          <div class="card">
+            <h3><span data-l="es">Backfill seguro</span><span data-l="en">Safe backfill</span></h3>
+            <p><span data-l="es">Script independiente para cargar el histórico de web_logs: no toca la marca de último sync, omite particiones existentes y particiona por fecha real del evento.</span><span data-l="en">A standalone script loads web_logs history: it leaves the last-sync watermark alone, skips existing partitions and partitions by actual event date.</span></p>
+          </div>
+          <div class="card">
+            <h3><span data-l="es">Seguridad y operación</span><span data-l="en">Security and operations</span></h3>
+            <p><span data-l="es">Credenciales en SSM como SecureString, roles IAM de mínimo privilegio y un reporte diario por SNS al equipo de datos.</span><span data-l="en">Credentials in SSM as SecureString, least-privilege IAM roles and a daily SNS report to the data team.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lessons -->
+      <div class="h-block">
+        <h3><span data-l="es">Problemas reales resueltos</span><span data-l="en">Real problems solved</span></h3>
+        <div class="lesson">
+          <h3>HIVE_BAD_DATA: INT64 incompatible with double</h3>
+          <p><span data-l="es">Causado por inferencia de tipos inconsistente entre particiones. Resuelto con el TypeEnforcer y un esquema canónico.</span><span data-l="en">Caused by inconsistent type inference across partitions. Fixed with the TypeEnforcer and a canonical schema.</span></p>
+        </div>
+        <div class="lesson">
+          <h3>Runtime.OutOfMemory</h3>
+          <p><span data-l="es">Backlogs largos de web_logs saturaban la Lambda. Se dimensionó a 10 GB de RAM y /tmp, y el backfill por bloques de días cubre los atrasos grandes.</span><span data-l="en">Long web_logs backlogs exhausted the Lambda. It was sized to 10 GB of RAM and /tmp, and chunked backfill handles large catch-ups.</span></p>
+        </div>
+        <div class="lesson">
+          <h3><span data-l="es">Tablas espurias del crawler</span><span data-l="en">Spurious crawler tables</span> (day_01, month_10…)</h3>
+          <p><span data-l="es">Glue reindexaba carpetas <code>key=value/</code> como tablas. Se documentó el procedimiento de recrawl limpio.</span><span data-l="en">Glue re-indexed <code>key=value/</code> folders as tables. A clean re-crawl procedure is documented.</span></p>
+        </div>
+        <p class="caption">
+          <span data-l="es">Basado en la arquitectura de referencia de Harvard University (<a href="https://github.com/Harvard-University-iCommons/canvas-data-2-aws" target="_blank" rel="noopener">canvas-data-2-aws</a>), reescrita como serverless. Licencia MIT.</span>
+          <span data-l="en">Based on Harvard University's reference architecture (<a href="https://github.com/Harvard-University-iCommons/canvas-data-2-aws" target="_blank" rel="noopener">canvas-data-2-aws</a>), rewritten as serverless. MIT licensed.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="wrap">
+      <div class="eyebrow">Stack</div>
+      <h2><span data-l="es">Herramientas con las que trabajo</span><span data-l="en">Tools I work with</span></h2>
+      <div class="stack-group"><h3><span data-l="es">Lenguajes</span><span data-l="en">Languages</span></h3>
+        <div class="chips"><span class="chip">Python</span><span class="chip">PySpark</span><span class="chip">T-SQL</span><span class="chip">SQL</span></div></div>
+      <div class="stack-group"><h3><span data-l="es">Plataformas de datos</span><span data-l="en">Data platforms</span></h3>
+        <div class="chips"><span class="chip">SQL Server</span><span class="chip">Azure Synapse Analytics</span><span class="chip">Databricks</span><span class="chip">Delta Lake</span><span class="chip">Snowflake</span></div></div>
+      <div class="stack-group"><h3><span data-l="es">ETL y orquestación</span><span data-l="en">ETL and orchestration</span></h3>
+        <div class="chips"><span class="chip">SSIS</span><span class="chip">AWS Step Functions</span><span class="chip">EventBridge</span></div></div>
+      <div class="stack-group"><h3>Cloud</h3>
+        <div class="chips"><span class="chip">Azure</span><span class="chip">AWS Lambda</span><span class="chip">S3</span><span class="chip">Glue</span><span class="chip">Athena</span><span class="chip">AWS SAM</span></div></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="eyebrow"><span data-l="es">Contacto</span><span data-l="en">Contact</span></div>
+      <h2><span data-l="es">Hablemos de datos</span><span data-l="en">Let's talk data</span></h2>
+      <p class="sub"><span data-l="es">El mejor lugar para ver mi trabajo y contactarme es GitHub.</span><span data-l="en">The best place to see my work and reach me is GitHub.</span></p>
+      <div class="btns">
+        <a class="btn primary" href="https://github.com/AJG2Pro89" target="_blank" rel="noopener">github.com/AJG2Pro89</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Alberto García G.</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var langBtn = document.getElementById('langBtn');
+  var themeBtn = document.getElementById('themeBtn');
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  function applyLang(l) {
+    root.setAttribute('data-lang', l);
+    root.setAttribute('lang', l);
+    langBtn.textContent = l === 'es' ? 'EN' : 'ES';
+  }
+  var saved = get('lang');
+  var initial = saved || ((navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  applyLang(initial);
+  langBtn.addEventListener('click', function () {
+    var next = root.getAttribute('data-lang') === 'es' ? 'en' : 'es';
+    applyLang(next); set('lang', next);
+  });
+
+  var theme = get('theme');
+  if (theme) root.setAttribute('data-theme', theme);
+  themeBtn.addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme') ||
+      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next); set('theme', next);
+  });
+})();
+</script>
+</body>
+</html>
